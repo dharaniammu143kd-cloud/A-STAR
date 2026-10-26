@@ -56,6 +56,71 @@
 
 ![image](https://github.com/natsaravanan/19AI405FUNDAMENTALSOFARTIFICIALINTELLIGENCE/assets/87870499/b1377c3f-011a-4c0f-a843-516842ae056a)
 
+
+# PROGRAM:
+```
+from collections import defaultdict
+
+H_dist = {}
+
+def aStarAlgo(start_node, stop_node):
+    open_set = {start_node}
+    closed_set = set()
+    g = {start_node: 0}
+    parents = {start_node: start_node}
+
+    while open_set:
+        n = min(open_set, key=lambda v: g[v] + H_dist[v])
+
+        if n == stop_node:
+            path = []
+            while parents[n] != n:
+                path.append(n)
+                n = parents[n]
+            path.append(start_node)
+            path.reverse()
+            print("Path found:", path)
+            return path
+
+        open_set.remove(n)
+        closed_set.add(n)
+
+        for m, weight in Graph_nodes[n]:
+            new_cost = g[n] + weight
+
+            if m not in g or new_cost < g[m]:
+                g[m] = new_cost
+                parents[m] = n
+                closed_set.discard(m)
+                open_set.add(m)
+
+    print("Path does not exist!")
+return None
+
+
+graph = defaultdict(list)
+
+n, e = map(int, input().split())
+
+for i in range(e):
+    u, v, cost = input().split()
+    graph[u].append((v, int(cost)))
+    graph[v].append((u, int(cost)))
+
+for i in range(n):
+    node, h = input().split()
+    H_dist[node] = int(h)
+
+Graph_nodes = graph
+
+start = input()
+goal = input()
+
+aStarAlgo(start, goal)
+```
+# OUTPUT:
+<img width="387" height="425" alt="image" src="https://github.com/user-attachments/assets/002ad788-9e09-4b46-a247-9518405ce472" />
+
 <hr>
 <h2>Sample Input</h2>
 <hr>
